@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./todolist.css">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div class="todoList_box">
+        <div id="todoList_items">
+
+        </div>
+        <div>
+            <input id="todoList_input" type="text"/>
+            <button id="addBtn">add</button>
+        </div>
+    </div>
+
+    <script>
+
+            let AJAX_datas = [
+                {
+                "id": "___AX1",
+                "createdAt": 1605148012345,
+                "memo": "Finish interview quiz"
+                },
+                {
+                "id": "___AX2",
+                "createdAt": 1605312012345,
+                "memo": "Go k8s workshop at 10:00 trm",
+                "address": "Taipei 101"
+                },
+                {
+                "id": "___AX3",
+                "createdAt": 1605657612345,
+                "memo": "Follow up interview process"
+                }
+            ]
+        
+        function add_Array () {
+
+            if (document.getElementById('todoList_input').value === '') return 
+            const time = new Date;
+
+            let newData = {
+                id: '___AX' + ( AJAX_datas.length + 1 ),
+                memo: document.getElementById('todoList_input').value,
+                createdAt: time.getFullYear() + "/" + (time.getMonth() + 1) + "/" + time.getDate()
+            } 
+
+            //將input上的資料推到陣列裡面
+            AJAX_datas.push(newData)
+            //新增之後 輸入框清空
+            document.getElementById('todoList_input').value = ''
+            run(AJAX_datas)
+        }
+
+        function run (datas) {
+
+            let display = datas.map((items , key)=>{
+                return `
+                    <div class="item" data-id=${items.id}>
+                        <svg class="icon_delete" data-id=${items.id} width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                        </svg>
+                        <h3>${items.memo}</h3>
+                        <p id="createdAt">createdAt :${items.createdAt}</p>
+                    </div>
+                    `
+            }).join('')
+                document.getElementById('todoList_items').innerHTML = display
+                let icons = document.querySelectorAll('.icon_delete')
+                icons.forEach((item , key) => {
+
+                    //點擊過濾掉點擊的資料
+                    item.addEventListener('click' , ()=>{
+                        let newAJAX_data = datas.filter( AJAX_data => !(AJAX_data.id == item.dataset.id) )
+                        AJAX_datas = newAJAX_data
+                        //新陣列 重新跑run
+                        run(AJAX_datas)
+                        }        
+                    )}
+                )
+        }
+
+        let inputVal = document.getElementById('todoList_input')
+        inputVal.addEventListener('change' , (e) => {
+
+        })
+        
+        let addBtn = document.getElementById('addBtn')
+        addBtn.addEventListener('click' , add_Array)
+        
+        // 一開始就進行渲染
+        run(AJAX_datas)
+    </script>
+</body>
+</html>

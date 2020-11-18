@@ -1,0 +1,50 @@
+.todoList_box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    padding: 20px;
+    margin: 15% 30% 10px 30%;
+    border-radius: 10px;
+    background-image: url('https://images.unsplash.com/photo-1605459802582-045b2dcfb3cd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+.item {
+    position: relative;
+    height: 80px;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 5px 5px 5px 5px;
+    background-color: rgba(255,255,255,0.3);
+    margin: 20px;
+}
+
+.icon_delete{
+    position: absolute;
+    right: -6px;
+    top: -6px;
+    cursor: pointer;
+    transition: all .3s;
+}
+.icon_delete:hover {
+    color: red;
+    transform: scale(1.5)
+}
+
+#todoList_input:focus {
+    transition: all .3s;
+    transform: scale(1.1)
+}
+
+#todoList_input {
+    transition: all .3s;
+}
+
+#createdAt {
+    position: absolute;
+    right: 5px;
+    bottom: -10px;
+}
